@@ -23,6 +23,19 @@ app.get('/', function (req, res) {
 app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
+app.get('/api/whoami', (req, res) => {
+  const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const language = req.headers['accept-language']; 
+  const software = req.headers['user-agent']; 
+
+  const responseObject = {
+    ipaddress: ipAddress,
+    language: language,
+    software: software,
+  };
+
+  res.json(responseObject); 
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
